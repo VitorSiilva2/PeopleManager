@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -19,6 +21,9 @@ public class User implements Serializable {
     private String email;
     private String password;
     private String name;
+
+    @OneToMany(mappedBy = "userId")
+    private List<Collaborator> collaborators = new ArrayList<>();
 
     public User() {
     }
@@ -60,6 +65,10 @@ public class User implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<Collaborator> getCollaborators() {
+        return collaborators;
     }
 
     @Override
