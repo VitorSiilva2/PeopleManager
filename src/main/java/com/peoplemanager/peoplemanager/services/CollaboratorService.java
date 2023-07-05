@@ -5,6 +5,7 @@ import com.peoplemanager.peoplemanager.domain.Feedback;
 import com.peoplemanager.peoplemanager.domain.User;
 import com.peoplemanager.peoplemanager.repositories.CollaboratorRepository;
 import com.peoplemanager.peoplemanager.repositories.UserRepository;
+import com.peoplemanager.peoplemanager.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +24,7 @@ public class CollaboratorService {
 
     public Collaborator findById(UUID id) {
         Optional<Collaborator> obj = collaboratorRepository.findById(id);
-        return obj.get();
+        return obj.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
     public Collaborator addCollaborator(Collaborator collaborator) {
