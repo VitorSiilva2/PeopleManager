@@ -28,4 +28,20 @@ public class FeedbackService {
     public Feedback addFeedBack(Feedback feedback) {
         return feedbackRepository.save(feedback);
     }
+
+    public void deleteFeedback(UUID id) {
+        feedbackRepository.deleteById(id);
+    }
+
+    public Feedback updateFeedback(UUID id, Feedback obj) {
+        Feedback feedback = feedbackRepository.getReferenceById(id);
+        updateData(feedback, obj);
+        return feedbackRepository.save(feedback);
+
+    }
+
+    private void updateData(Feedback feedback, Feedback obj) {
+        feedback.setFeedbackText(obj.getFeedbackText());
+    }
+
 }

@@ -27,11 +27,11 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public void delete(UUID id) {
+    public void deleteUser(UUID id) {
         userRepository.deleteById(id);
     }
 
-    public User update(UUID id, User obj) {
+    public User updateUser(UUID id, User obj) {
         User user = userRepository.getReferenceById(id);
         updateData(user, obj);
         return userRepository.save(user);

@@ -40,4 +40,16 @@ public class FeedbackController {
         return ResponseEntity.created(uri).body(feedback);
     }
 
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> deleteFeedback(@PathVariable UUID id) {
+       feedbackService.deleteFeedback(id);
+       return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<Feedback> updateFeedback(@PathVariable UUID id, @RequestBody Feedback obj) {
+        obj = feedbackService.updateFeedback(id, obj);
+        return ResponseEntity.ok().body(obj);
+    }
+
 }
