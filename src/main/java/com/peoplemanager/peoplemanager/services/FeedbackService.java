@@ -1,11 +1,13 @@
 package com.peoplemanager.peoplemanager.services;
 
 import com.peoplemanager.peoplemanager.domain.Feedback;
-import com.peoplemanager.peoplemanager.domain.User;
 import com.peoplemanager.peoplemanager.repositories.FeedbackRepository;
-import com.peoplemanager.peoplemanager.repositories.UserRepository;
+import com.peoplemanager.peoplemanager.services.exceptions.DatabaseException;
 import com.peoplemanager.peoplemanager.services.exceptions.ResourceNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,13 +33,26 @@ public class FeedbackService {
     }
 
     public void deleteFeedback(UUID id) {
-        feedbackRepository.deleteById(id);
+        try {
+            feedbackRepository.deleteById(id);
+        } catch (
+                EmptyResultDataAccessException e) {
+            throw new ResourceNotFoundException(id);
+        } catch (
+                DataIntegrityViolationException e) {
+            throw new DatabaseException(e.getMessage());
+        }
     }
 
     public Feedback updateFeedback(UUID id, Feedback obj) {
-        Feedback feedback = feedbackRepository.getReferenceById(id);
-        updateData(feedback, obj);
-        return feedbackRepository.save(feedback);
+        try {
+            Feedback feedback = feedbackRepository.getReferenceById(id);
+            updateData(feedback, obj);
+            return feedbackRepository.save(feedback);
+        } catch (
+                EntityNotFoundException e) {
+            throw new ResourceNotFoundException(id);
+        }
 
     }
 

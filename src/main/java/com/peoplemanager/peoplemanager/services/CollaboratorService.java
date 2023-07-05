@@ -1,12 +1,13 @@
 package com.peoplemanager.peoplemanager.services;
 
 import com.peoplemanager.peoplemanager.domain.Collaborator;
-import com.peoplemanager.peoplemanager.domain.Feedback;
-import com.peoplemanager.peoplemanager.domain.User;
 import com.peoplemanager.peoplemanager.repositories.CollaboratorRepository;
-import com.peoplemanager.peoplemanager.repositories.UserRepository;
+import com.peoplemanager.peoplemanager.services.exceptions.DatabaseException;
 import com.peoplemanager.peoplemanager.services.exceptions.ResourceNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,13 +33,26 @@ public class CollaboratorService {
     }
 
     public void deleteCollaborator(UUID id) {
-        collaboratorRepository.deleteById(id);
+        try {
+            collaboratorRepository.deleteById(id);
+        } catch (
+                EmptyResultDataAccessException e) {
+            throw new ResourceNotFoundException(id);
+        } catch (
+                DataIntegrityViolationException e) {
+            throw new DatabaseException(e.getMessage());
+        }
+
     }
 
     public Collaborator updateCollaborator(UUID id, Collaborator obj) {
-        Collaborator collaborator = collaboratorRepository.getReferenceById(id);
-        updateData(collaborator, obj);
-        return collaboratorRepository.save(collaborator);
+        try {
+            Collaborator collaborator = collaboratorRepository.getReferenceById(id);
+            updateData(collaborator, obj);
+            return collaboratorRepository.save(collaborator);
+        } catch (EntityNotFoundException e) {
+            throw new ResourceNotFoundException(id);
+        }
 
     }
 
