@@ -40,4 +40,17 @@ public class CollaboratorController {
         return ResponseEntity.created(uri).body(collaborator);
     }
 
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> deleteCollaborator(@PathVariable UUID id) {
+        collaboratorService.deleteCollaborator(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<Collaborator> updateCollaborator(@PathVariable UUID id, @RequestBody Collaborator obj) {
+        obj = collaboratorService.updateCollaborator(id, obj);
+        return ResponseEntity.ok().body(obj);
+    }
+
+
 }
