@@ -1,5 +1,6 @@
 package com.peoplemanager.peoplemanager.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.springframework.stereotype.Component;
 
@@ -22,6 +23,7 @@ public class User implements Serializable {
     private String password;
     private String name;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "userId")
     private List<Collaborator> collaborators = new ArrayList<>();
 

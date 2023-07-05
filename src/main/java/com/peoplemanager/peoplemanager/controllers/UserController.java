@@ -2,7 +2,6 @@ package com.peoplemanager.peoplemanager.controllers;
 
 import com.peoplemanager.peoplemanager.domain.User;
 import com.peoplemanager.peoplemanager.services.UserService;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

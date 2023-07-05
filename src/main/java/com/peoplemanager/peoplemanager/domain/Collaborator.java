@@ -1,5 +1,6 @@
 package com.peoplemanager.peoplemanager.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.springframework.stereotype.Component;
 

@@ -24,11 +24,10 @@ public class TestConfig implements CommandLineRunner {
     public void run(String... args) throws Exception {
 
 
-
         User u1 = new User(null, "camila@gmail.com", "12345678", "Camila");
         User u2 = new User(null, "vitor@gmail.com", "123456789", "Vitor");
 
-        Collaborator c1 = new Collaborator(null, "Vítoria", "vitoria@gmail.com", "Rep",u1);
+        Collaborator c1 = new Collaborator(null, "Vítoria", "vitoria@gmail.com", "Rep", u1);
         Collaborator c2 = new Collaborator(null, "Adison", "adison@gmail.com", "Rep", u1);
 
         userRepository.saveAll(Arrays.asList(u1, u2));
