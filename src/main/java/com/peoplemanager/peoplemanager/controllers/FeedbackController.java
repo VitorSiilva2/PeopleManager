@@ -1,6 +1,8 @@
 package com.peoplemanager.peoplemanager.controllers;
 
+import com.peoplemanager.peoplemanager.domain.Feedback;
 import com.peoplemanager.peoplemanager.domain.User;
+import com.peoplemanager.peoplemanager.services.FeedbackService;
 import com.peoplemanager.peoplemanager.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,36 +14,30 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(value = "/users")
-public class UserController {
+@RequestMapping(value = "/feedbacks")
+public class FeedbackController {
 
     @Autowired
-    private UserService userService;
+    private FeedbackService feedbackService;
 
     @GetMapping
-    public ResponseEntity<List<User>> findAll() {
-        List<User> list = userService.findAll();
+    public ResponseEntity<List<Feedback>> findAll() {
+        List<Feedback> list = feedbackService.findAll();
         return ResponseEntity.ok().body(list);
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<User> findById(@PathVariable UUID id) {
-        User obj = userService.findById(id);
+    public ResponseEntity<Feedback> findById(@PathVariable UUID id) {
+        Feedback obj = feedbackService.findById(id);
         return ResponseEntity.ok().body(obj);
     }
 
     @PostMapping()
-    public ResponseEntity<User> addUser(@RequestBody User user) {
-        userService.addUser(user);
+    public ResponseEntity<Feedback> addFeedback(@RequestBody Feedback feedback) {
+        feedbackService.addFeedBack(feedback);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(user.getId()).toUri();
-        return ResponseEntity.created(uri).body(user);
-    }
-
-    @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> delete(@PathVariable UUID id) {
-        userService.delete(id);
-        return ResponseEntity.noContent().build();
+                .buildAndExpand(feedback.getId()).toUri();
+        return ResponseEntity.created(uri).body(feedback);
     }
 
 }

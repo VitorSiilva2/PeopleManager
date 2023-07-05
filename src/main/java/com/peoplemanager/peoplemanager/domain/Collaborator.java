@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -22,6 +24,10 @@ public class Collaborator implements Serializable {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User userId;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "CollaboratorId")
+    private List<Feedback> feedbacks = new ArrayList<>();
 
     public Collaborator() {
     }
@@ -52,6 +58,10 @@ public class Collaborator implements Serializable {
 
     public String getEmail() {
         return email;
+    }
+
+    public List<Feedback> getFeedbacks() {
+        return feedbacks;
     }
 
     public void setEmail(String email) {
