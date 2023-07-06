@@ -8,6 +8,7 @@ import com.peoplemanager.peoplemanager.repositories.FeedbackRepository;
 import com.peoplemanager.peoplemanager.repositories.UserRepository;
 import com.peoplemanager.peoplemanager.services.DBService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,15 +18,23 @@ import java.time.Instant;
 import java.util.Arrays;
 
 @Configuration
-@Profile("test")
-public class TestConfig {
+@Profile("dev")
+public class DevConfig {
 
     @Autowired
     private DBService dbService;
-    @Bean
-    public void instaciaDB() {
-        this.dbService.instaciaDB();
 
+    @Value("$spring.jpa.hibernate.ddl-auto")
+    private String ddl;
+
+    @Bean
+    public boolean instanciaDB() {
+        if(ddl.equals("create")) {
+            this.dbService.instaciaDB();
+        }
+
+        return false;
     }
+
 
 }

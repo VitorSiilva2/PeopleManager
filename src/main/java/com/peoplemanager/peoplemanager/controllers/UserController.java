@@ -3,6 +3,7 @@ package com.peoplemanager.peoplemanager.controllers;
 import com.peoplemanager.peoplemanager.domain.User;
 import com.peoplemanager.peoplemanager.dtos.UserRecordDto;
 import com.peoplemanager.peoplemanager.services.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,7 +32,7 @@ public class UserController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<UserRecordDto> findById(@PathVariable UUID id) {
+    public ResponseEntity<UserRecordDto> findById(@PathVariable @Valid UUID id) {
         User obj = userService.findById(id);
         userRecordDto = new UserRecordDto(obj.getName().toString(), obj.getEmail());
         return ResponseEntity.ok().body(userRecordDto);
