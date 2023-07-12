@@ -3,6 +3,7 @@ package com.peoplemanager.peoplemanager.domain;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
 import java.time.Instant;
@@ -24,16 +25,16 @@ public class Feedback implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "collaborator_id")
-    private Collaborator CollaboratorId;
+    private Collaborator collaborator;
 
-    public Feedback() {
-    }
-
-    public Feedback(UUID id, String feedbackText, Instant moment, Collaborator collaboratorId) {
+    public Feedback(UUID id, String feedbackText, Instant moment, Collaborator collaborator) {
         this.id = id;
         FeedbackText = feedbackText;
         this.moment = moment;
-        CollaboratorId = collaboratorId;
+        this.collaborator = collaborator;
+    }
+
+    public Feedback() {
     }
 
     public UUID getId() {
@@ -44,14 +45,6 @@ public class Feedback implements Serializable {
         this.id = id;
     }
 
-    public Collaborator getCollaboratorId() {
-        return CollaboratorId;
-    }
-
-    public void setCollaboratorId(Collaborator collaboratorId) {
-        CollaboratorId = collaboratorId;
-    }
-
     public String getFeedbackText() {
         return FeedbackText;
     }
@@ -60,13 +53,29 @@ public class Feedback implements Serializable {
         FeedbackText = feedbackText;
     }
 
+    public Instant getMoment() {
+        return moment;
+    }
+
+    public void setMoment(Instant moment) {
+        this.moment = moment;
+    }
+
+    public Collaborator getCollaborator() {
+        return collaborator;
+    }
+
+    public void setCollaborator(Collaborator collaborator) {
+        this.collaborator = collaborator;
+    }
+
     @Override
     public String toString() {
         return "Feedback{" +
                 "id=" + id +
                 ", FeedbackText='" + FeedbackText + '\'' +
                 ", moment=" + moment +
-                ", CollaboratorId=" + CollaboratorId +
+                ", collaborator=" + collaborator +
                 '}';
     }
 
@@ -74,7 +83,7 @@ public class Feedback implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Feedback feedback)) return false;
-        return id.equals(feedback.id);
+        return Objects.equals(id, feedback.id);
     }
 
     @Override
@@ -82,3 +91,4 @@ public class Feedback implements Serializable {
         return Objects.hash(id);
     }
 }
+

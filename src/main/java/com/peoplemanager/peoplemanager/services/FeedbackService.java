@@ -60,4 +60,7 @@ public class FeedbackService {
         feedback.setFeedbackText(obj.getFeedbackText());
     }
 
+    public List<Feedback> findFeedbackById(UUID collaborator) {
+        return feedbackRepository.findFeedbackByCollaboratorId(collaborator);
+    }
 }

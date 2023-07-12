@@ -2,6 +2,9 @@ package com.peoplemanager.peoplemanager.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
@@ -18,15 +21,19 @@ public class Collaborator implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
+
+    @NotBlank(message = "name cannot be empty ")
     private String name;
+    @NotBlank(message = "email cannot be empty ")
     private String email;
+    @NotBlank(message = "office cannot be empty ")
     private String office;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User userId;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "CollaboratorId")
+    @OneToMany(mappedBy = "collaborator")
     private List<Feedback> feedbacks = new ArrayList<>();
 
     public Collaborator() {

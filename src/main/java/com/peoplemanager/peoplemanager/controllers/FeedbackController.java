@@ -32,6 +32,12 @@ public class FeedbackController {
         return ResponseEntity.ok().body(obj);
     }
 
+    @GetMapping(value = "/collaborator/{id}")
+    public ResponseEntity<List<Feedback>> findFeedbackById(@PathVariable UUID id) {
+        List<Feedback> feedbacks = feedbackService.findFeedbackById(id);
+        return ResponseEntity.ok().body(feedbacks);
+    }
+
     @PostMapping()
     public ResponseEntity<Feedback> addFeedback(@RequestBody Feedback feedback) {
         feedbackService.addFeedBack(feedback);
