@@ -3,7 +3,6 @@ package com.peoplemanager.peoplemanager.domain;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
 import java.time.Instant;

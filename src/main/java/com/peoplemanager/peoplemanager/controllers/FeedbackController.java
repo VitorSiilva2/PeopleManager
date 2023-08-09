@@ -1,9 +1,7 @@
 package com.peoplemanager.peoplemanager.controllers;
 
 import com.peoplemanager.peoplemanager.domain.Feedback;
-import com.peoplemanager.peoplemanager.domain.User;
 import com.peoplemanager.peoplemanager.services.FeedbackService;
-import com.peoplemanager.peoplemanager.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
